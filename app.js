@@ -1,12 +1,10 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 
-// Configuração da conexão com o banco de dados
 const sequelize = new Sequelize('5sbd_av2', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 });
 
-// Definição do modelo Aeroporto
 const Aeroporto = sequelize.define('Aeroporto', {
   codigo: {
     type: DataTypes.STRING,
@@ -25,9 +23,7 @@ const Aeroporto = sequelize.define('Aeroporto', {
   timestamps: false,
 });
 
-// Definição do modelo Pista
 class Pista extends Model {
-  // Método para criar uma nova pista
   static async criarPista(dados) {
     try {
       const pista = await Pista.create(dados);
@@ -39,7 +35,6 @@ class Pista extends Model {
     }
   }
 
-  // Método para listar todas as pistas
   static async listarPistas() {
     try {
       const pistas = await Pista.findAll({
@@ -56,7 +51,6 @@ class Pista extends Model {
     }
   }
 
-  // Método para atualizar uma pista
   static async atualizarPista(identificacao, novosDados) {
     try {
       const pista = await Pista.findByPk(identificacao);
@@ -73,7 +67,6 @@ class Pista extends Model {
     }
   }
 
-  // Método para deletar uma pista
   static async deletarPista(identificacao) {
     try {
       const pista = await Pista.findByPk(identificacao);
@@ -114,7 +107,6 @@ Pista.init({
   timestamps: false,
 });
 
-// Relacionamento entre Pista e Aeroporto
 Pista.belongsTo(Aeroporto, {
   foreignKey: {
     name: 'aeroportoCodigo',
@@ -128,18 +120,15 @@ Aeroporto.hasMany(Pista, {
   as: 'pistas',
 });
 
-// Função principal para testar os métodos
+// TESTE
 (async () => {
   try {
-    // Conectar ao banco
     await sequelize.authenticate();
     console.log('Conexão com o banco de dados estabelecida com sucesso.');
 
-    // Sincronizar os modelos (não altera aeroportos)
     await sequelize.sync({ alter: true });
     console.log('Modelos sincronizados com o banco de dados.');
 
-    // Testando os métodos de Pista
     // CREATE
     const novaPista = await Pista.criarPista({
       identificacao: 'P5-GRU',
@@ -161,7 +150,6 @@ Aeroporto.hasMany(Pista, {
   } catch (error) {
     console.error('Erro:', error);
   } finally {
-    // Fechar conexão com o banco
     await sequelize.close();
     console.log('Conexão encerrada.');
   }
