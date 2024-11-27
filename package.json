@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "mysql2": "^3.11.4",
+    "sequelize": "^6.37.5"
+  },
+  "name": "av2",
+  "version": "1.0.0",
+  "main": "pista.orm.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
