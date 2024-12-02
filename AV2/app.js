@@ -1,42 +1,31 @@
 require('dotenv').config();
+const express = require('express');
 const { sequelize } = require('./database');
-const Aeroporto = require('./models/Aeroporto');
-const Pista = require('./models/Pista');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+const pistaRoutes = require('./routes/pistaRoutes');
+const aeroportoRoutes = require('./routes/aeroportoRoutes');
 
-// TESTE
+const app = express();
+app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/pistas', pistaRoutes);
+app.use('/aeroportos', aeroportoRoutes);
+
+const PORT = process.env.PORT || 3000;
+
 (async () => {
   try {
     await sequelize.authenticate();
     console.log('Conexão com o banco de dados estabelecida com sucesso.');
-
     await sequelize.sync({ alter: true });
     console.log('Modelos sincronizados com o banco de dados.');
 
-    // CREATE
-    const novaPista = await Pista.criarPista({
-      identificacao: 'P5-GRU',
-      comprimento: 3800,
-      largura: 45,
-      status: 'Ativa',
-      aeroportoCodigo: 'GRU',
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
     });
-
-    // READ
-    await Pista.listarPistas();
-
-    // UPDATE
-    await Pista.atualizarPista('P5-GRU', { status: 'Inativa' });
-
-    // READ
-    await Pista.listarPistas();
-
-    // DELETE
-    await Pista.deletarPista('P5-GRU');
-
   } catch (error) {
     console.error('Erro:', error);
-  } finally {
-    await sequelize.close();
-    console.log('Conexão encerrada.');
   }
 })();

@@ -1,0 +1,230 @@
+
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pista Aeroporto API",
+    "description": "API para gerenciar pistas e aeroportos"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/pistas": {
+      "post": {
+        "summary": "Cria uma nova pista",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados da pista",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pista"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Pista criada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista todas as pistas",
+        "responses": {
+          "200": {
+            "description": "Lista de pistas"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/pistas/{id}": {
+      "put": {
+        "summary": "Atualiza uma pista",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados da pista",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pista"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pista atualizada"
+          },
+          "404": {
+            "description": "Pista não encontrada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma pista",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pista deletada"
+          },
+          "404": {
+            "description": "Pista não encontrada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/aeroportos": {
+      "post": {
+        "summary": "Cria um novo aeroporto",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados do aeroporto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Aeroporto"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Aeroporto criado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista todos os aeroportos",
+        "responses": {
+          "200": {
+            "description": "Lista de aeroportos"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/aeroportos/{id}": {
+      "put": {
+        "summary": "Atualiza um aeroporto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados do aeroporto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Aeroporto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aeroporto atualizado"
+          },
+          "404": {
+            "description": "Aeroporto não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um aeroporto",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aeroporto deletado"
+          },
+          "404": {
+            "description": "Aeroporto não encontrado"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pista": {
+      "type": "object",
+      "properties": {
+        "identificacao": {
+          "type": "string"
+        },
+        "comprimento": {
+          "type": "number"
+        },
+        "largura": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        },
+        "aeroportoCodigo": {
+          "type": "string"
+        }
+      }
+    },
+    "Aeroporto": {
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "string"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "localizacao": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

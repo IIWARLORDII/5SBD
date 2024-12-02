@@ -1,0 +1,171 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pista API",
+    "description": "API para gerenciar pistas"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/pistas": {
+      "post": {
+        "summary": "Cria uma nova pista",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados da pista",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pista"
+            },
+            "example": {
+              "identificacao": "P3-GRU",
+              "comprimento": 3800,
+              "largura": 45,
+              "status": "Ativa",
+              "aeroportoCodigo": "GRU"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Pista criada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "get": {
+        "summary": "Lista todas as pistas",
+        "responses": {
+          "200": {
+            "description": "Lista de pistas"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/pistas/{id}": {
+      "get": {
+        "summary": "Obtém uma pista pelo ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pista encontrada"
+          },
+          "404": {
+            "description": "Pista não encontrada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza uma pista",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados da pista",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pista"
+            },
+            "example": {
+              "status": "Inativa"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pista atualizada"
+          },
+          "404": {
+            "description": "Pista não encontrada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma pista",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pista deletada"
+          },
+          "404": {
+            "description": "Pista não encontrada"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pista": {
+      "type": "object",
+      "properties": {
+        "identificacao": {
+          "type": "string"
+        },
+        "comprimento": {
+          "type": "number"
+        },
+        "largura": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        },
+        "aeroportoCodigo": {
+          "type": "string"
+        }
+      }
+    },
+    "Aeroporto": {
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "string"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "localizacao": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
